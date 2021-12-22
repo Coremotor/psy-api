@@ -15,7 +15,7 @@ export const signUp = async (req: Request, res: Response) => {
     if (candidate) {
       return res
         .status(400)
-        .json({ massage: "Пользователь с таким email уже существует!" });
+        .json({ message: "Пользователь с таким email уже существует!" });
     }
     const hashPassword = bcrypt.hashSync(password, 7);
     const userRole = await Role.findOne({ value: Roles.USER });
@@ -26,7 +26,9 @@ export const signUp = async (req: Request, res: Response) => {
       roles: [userRole.value],
     });
     user.save();
-    return res.json({ message: "Пользователь успешно зарегистрирован" });
+    return res
+      .status(200)
+      .json({ message: "Пользователь успешно зарегистрирован" });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: "registration server error" });

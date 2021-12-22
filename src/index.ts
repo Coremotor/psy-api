@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import log4js from "log4js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -11,6 +12,7 @@ logger.level = process.env.LOG_LEVEL;
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(router);
 

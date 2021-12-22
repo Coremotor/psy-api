@@ -1,12 +1,9 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-
-interface JwtRequest extends Request {
-  user: { id: string; roles: string[] } | string | JwtPayload;
-}
+import jwt from "jsonwebtoken";
+import { IJwtRequest } from "../interfaces";
 
 export const authGuard: RequestHandler = (
-  req: JwtRequest,
+  req: IJwtRequest,
   res: Response,
   next: NextFunction
 ) => {

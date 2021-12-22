@@ -22,7 +22,7 @@ export const signIn = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Введен неверный пароль" });
     }
     const token = generateAccessToken(user._id, user.roles);
-    return res.json({ token });
+    return res.status(200).json({ token });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: "login server error" });
