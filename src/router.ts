@@ -10,7 +10,7 @@ const router = Router();
 
 router.post("/api/v1/sign-up", signUp);
 router.post("/api/v1/sign-in", signIn);
-router.get("/api/v1/users", rolesGuard([Roles.ADMIN]), getUsers);
+router.get("/api/v1/users", authGuard, rolesGuard([Roles.ADMIN]), getUsers);
 
 router.get("/api/v1/me", authGuard, getProfile);
 router.put("/api/v1/edit-profile", authGuard, editProfile);
