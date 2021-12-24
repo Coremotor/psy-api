@@ -5,10 +5,9 @@ const ArticleSchema = new Schema({
   description: { type: String, unique: true, require: true },
   textHTML: { type: String, unique: true, require: true },
   categories: [{ type: String, ref: "Category" }],
-  likes: { type: Number },
-  views: { type: Number },
+  likes: { type: Number, default: 0 },
+  views: { type: Number, default: 0 },
   previewImage: { type: String },
-  images: [{ type: String }],
 });
 
 export const Article = model("Article", ArticleSchema);

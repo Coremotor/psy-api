@@ -5,6 +5,16 @@ import { getUsers } from "./controllers/users.controller";
 import { authGuard, rolesGuard } from "./middlewaries/guards";
 import { Roles } from "./models/role";
 import { editProfile, getProfile } from "./controllers/profile.controller";
+import {
+  addPersons,
+  addStories,
+  findPersonStories,
+} from "./controllers/example.controller";
+import {
+  addCategory,
+  getCategories,
+} from "./controllers/categories.controller";
+import { addArticle } from "./controllers/articles.controller";
 
 const router = Router();
 
@@ -15,5 +25,14 @@ router.get("/api/v1/users", authGuard, rolesGuard([Roles.ADMIN]), getUsers);
 router.get("/api/v1/me", authGuard, getProfile);
 router.put("/api/v1/edit-profile", authGuard, editProfile);
 // router.post("/api/v1/add-roles", addRoles);
+
+router.get("/api/v1/categories", getCategories);
+
+router.post("/api/v1/add-person", addPersons);
+router.post("/api/v1/add-story", addStories);
+router.post("/api/v1/add-category", addCategory);
+router.get("/api/v1/person-stories", findPersonStories);
+
+router.post("/api/v1/add-article", addArticle);
 
 export default router;

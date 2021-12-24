@@ -4,4 +4,4 @@ const CategorySchema = new Schema({
   value: { type: String, unique: true },
 });
 
-export const Role = model("Category", CategorySchema);
+export const Category = model("Category", CategorySchema);
