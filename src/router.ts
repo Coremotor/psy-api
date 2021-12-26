@@ -14,7 +14,12 @@ import {
   addCategory,
   getCategories,
 } from "./controllers/categories.controller";
-import { addArticle } from "./controllers/articles.controller";
+import {
+  addArticle,
+  getArticle,
+  getArticles,
+  updateArticle,
+} from "./controllers/articles.controller";
 
 const router = Router();
 
@@ -34,5 +39,8 @@ router.post("/api/v1/add-category", addCategory);
 router.get("/api/v1/person-stories", findPersonStories);
 
 router.post("/api/v1/add-article", addArticle);
+router.put("/api/v1/articles/:id", updateArticle);
+router.get("/api/v1/articles", getArticles);
+router.get("/api/v1/articles/:id", getArticle);
 
 export default router;

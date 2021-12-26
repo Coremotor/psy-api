@@ -3,13 +3,23 @@ import { Article } from "../models/article";
 
 export const addArticle = async (req: Request, res: Response) => {
   try {
-    const { title, description, textHTML, categories, previewImage } = req.body;
+    const {
+      title,
+      description,
+      textHTML,
+      categories,
+      previewImage,
+      isDraft,
+      isArchive,
+    } = req.body;
     const article = new Article({
       title,
       description,
       textHTML,
       categories,
       previewImage,
+      isDraft,
+      isArchive,
     });
 
     await article.save();
@@ -18,5 +28,50 @@ export const addArticle = async (req: Request, res: Response) => {
   } catch (e) {
     console.log(e);
     res.status(500).send("Article not added");
+  }
+};
+
+export const updateArticle = async (req: Request, res: Response) => {
+  try {
+    const article = req.body;
+    const { id } = req.params;
+    await Article.updateOne({ _id: id }, article);
+    const updatedArticle = await Article.findOne({ _id: id });
+
+    res.status(200).json(updatedArticle);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Article not update");
+  }
+};
+
+export const getArticles = async (req: Request, res: Response) => {
+  try {
+    const { category } = req.query;
+    if (category) {
+      const articles = await Article.find({ categories: category });
+      res.status(200).json(articles);
+    } else {
+      const articles = await Article.find();
+      res.status(200).json(articles);
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Articles not find");
+  }
+};
+
+export const getArticle = async (req: Request, res: Response) => {
+  try {
+    const { withView } = req.query;
+    const { id } = req.params;
+    const article = await Article.findOne({ _id: id });
+    if (withView) {
+      await Article.updateOne({ _id: id }, { views: article.views + 1 });
+    }
+    res.status(200).json(article);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Article not find");
   }
 };
