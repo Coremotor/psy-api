@@ -25,7 +25,7 @@ export const authGuard: RequestHandler = (
     next();
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "sever error" });
+    res.status(403).json({ message: "Authorization error" });
   }
 };
 
@@ -63,7 +63,7 @@ export const rolesGuard = (roles: string[]) => {
       next();
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "sever error" });
+      res.status(500).json({ message: "Roles error" });
     }
   };
 };
