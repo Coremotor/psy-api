@@ -47,12 +47,25 @@ export const updateArticle = async (req: Request, res: Response) => {
 
 export const getArticles = async (req: Request, res: Response) => {
   try {
-    const { category } = req.query;
+    const { category, sortByDate, sortByViews, limit } = req.query;
+    console.log(category, sortByDate, sortByViews, limit);
     if (category) {
-      const articles = await Article.find({ categories: category });
+      const articles = await Article.find({ categories: category }).sort({
+        createdAt: sortByDate || "desc",
+      });
+      res.status(200).json(articles);
+    } else if (limit && sortByViews) {
+      const articles = await Article.find()
+        .sort({
+          views: sortByViews,
+          createdAt: sortByDate || "desc",
+        })
+        .limit(+limit);
       res.status(200).json(articles);
     } else {
-      const articles = await Article.find();
+      const articles = await Article.find().sort({
+        createdAt: sortByDate,
+      });
       res.status(200).json(articles);
     }
   } catch (e) {
