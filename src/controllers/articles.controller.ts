@@ -48,7 +48,7 @@ export const updateArticle = async (req: Request, res: Response) => {
 export const getArticles = async (req: Request, res: Response) => {
   try {
     const { category, sortByDate, sortByViews, limit } = req.query;
-    console.log(category, sortByDate, sortByViews, limit);
+    // console.log(category, sortByDate, sortByViews, limit);
     if (category) {
       const articles = await Article.find({ categories: category }).sort({
         createdAt: sortByDate || "desc",
