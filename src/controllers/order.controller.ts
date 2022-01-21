@@ -9,8 +9,8 @@ export const createOrder = async (req: Request, res: Response) => {
       port: 587,
       secure: false, // upgrade later with STARTTLS
       auth: {
-        user: "fortestapps42@gmail.com",
-        pass: "rowxapxcerpzsuzk",
+        user: process.env.SMTP_LOGIN,
+        pass: process.env.SMTP_PASSWORD,
       },
     });
 
