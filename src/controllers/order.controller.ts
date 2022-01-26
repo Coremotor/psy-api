@@ -23,7 +23,9 @@ export const createOrder = async (req: Request, res: Response) => {
 
     transport.sendMail(mailOptions, function (error, response) {
       if (error) {
-        res.status(500).send("Send mail error in transport");
+        res
+          .status(500)
+          .json({ message: "Send mail error in transport", error });
       } else {
         res.status(200).send("Mail is send");
       }
