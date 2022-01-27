@@ -4,12 +4,11 @@ import mailgun from "mailgun-js";
 export const createOrder = async (req: Request, res: Response) => {
   try {
     const { name, email, description } = req.body;
-    const apiKey = process.env.MAILGUN_APIKEY;
-    const domain = process.env.MAILGUN_DOMAIN;
-    const mg = mailgun({
-      apiKey,
-      domain,
-    });
+    const config = {
+      apiKey: process.env.MAILGUN_APIKEY,
+      domain: process.env.MAILGUN_DOMAIN,
+    };
+    const mg = mailgun(config);
     const data = {
       from: "Mailgun Sandbox <postmaster@sandboxb8ec835e31e74ece9a63b0561e1be31d.mailgun.org>",
       to: "coremotor@outlook.com",
