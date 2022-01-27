@@ -3,6 +3,9 @@ import mailgun from "mailgun-js";
 
 export const createOrder = async (req: Request, res: Response) => {
   const { name, email, description } = req.body;
+  const key = process.env.MAILGUN_APIKEY;
+  const domain = process.env.MAILGUN_DOMAIN;
+  console.log(key, domain);
   const mg = mailgun({
     apiKey: process.env.MAILGUN_APIKEY,
     domain: process.env.MAILGUN_DOMAIN,
@@ -17,7 +20,7 @@ export const createOrder = async (req: Request, res: Response) => {
     await mg.messages().send(data);
     res.status(200).send("Mail is send");
   } catch (e) {
-    console.log(e);
     res.status(500).json({ message: "Send mail error", e });
+    console.log("create order error", e);
   }
 };
