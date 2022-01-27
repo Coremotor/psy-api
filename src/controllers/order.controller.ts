@@ -7,8 +7,8 @@ export const createOrder = async (req: Request, res: Response) => {
   const domain = process.env.MAILGUN_DOMAIN;
   console.log(key, domain);
   const mg = mailgun({
-    apiKey: process.env.MAILGUN_APIKEY,
-    domain: process.env.MAILGUN_DOMAIN,
+    apiKey: key,
+    domain: domain,
   });
   const data = {
     from: "Mailgun Sandbox <postmaster@sandboxb8ec835e31e74ece9a63b0561e1be31d.mailgun.org>",
@@ -17,8 +17,8 @@ export const createOrder = async (req: Request, res: Response) => {
     text: `Name: ${name} \n Email: ${email} \n Description: ${description}`,
   };
   try {
-    await mg.messages().send(data);
-    res.status(200).send("Mail is send");
+    const response = await mg.messages().send(data);
+    res.status(200).json({ message: "Mail is send", response });
   } catch (e) {
     res.status(500).json({ message: "Send mail error", e });
     console.log("create order error", e);
